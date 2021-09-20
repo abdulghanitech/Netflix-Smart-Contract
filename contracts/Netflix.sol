@@ -11,7 +11,7 @@ contract Netflix{
         string name;
         string description;
         uint price;
-        address payable sellerId;
+        address sellerId;
         bool isActive;
     }
 
@@ -31,7 +31,7 @@ contract Netflix{
             name: name,
             description: description,
             price: price,
-            sellerId: payable(msg.sender),
+            sellerId: msg.sender,
             isActive: true
         });
 
@@ -74,7 +74,7 @@ contract Netflix{
         require(listings[id].isActive == true, "The listing is not active");
 
         // transfer the money to the seller
-        payable(listings[id].sellerId).transfer(listings[id].price);
+        payable(listings[id].sellerId).send(listings[id].price);
 
         // set the listing to inactive
         listings[id].isActive = false;
